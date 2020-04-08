@@ -26,9 +26,17 @@ Route::prefix('admin')->group(function(){
 	Route::get('/login','Auth\AdminLoginController@showLoginForm')->name('admin.login');
 	Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 	Route::get('/', 'AdminController@index')->name('admin.dashboard');
-	Route::post('/', 'AdminController@registerCategory')->name('register.category');
-	Route::get('/category','AdminController@categoryDetails')->name('category.details');
+	Route::get('/category/add','AdminController@showRegisterCategory')->name('showRegCategory');
+	Route::post('/category/add', 'AdminController@registerCategory')->name('register.category');
+    Route::get('/category','AdminController@categoryDetails')->name('category.details');
+	Route::get('/category/edit/{id}','AdminController@categoryEdit');
+	Route::post('/category/update','AdminController@categoryUpdate')->name('edit.category');
+	Route::get('/category/delete/{id}','AdminController@categoryDelete')->name('delete.category');
+    Route::get('/product/add','AdminController@showaddProducts')->name('show.add.product');
+    Route::post('/product/add','AdminController@addProduct')->name('add.product');
 });
+
+Route::get('/products','userProducts@showAllProducts')->name('show.products');
 
 
 

@@ -15,22 +15,27 @@
             </div>
             <div class="col-sm-9">
                 <div class="card">
+                    <div class="card-header">Category Details</div>
                         <div class="card-body">
-                            <div class="card-title">Category Details</div>
-                            <table border="1">
-                                <tr>
-                                    <th>Category Name</th>
-                                </tr>
-                                @foreach($categories as $cat)
+                            <table class="table">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <td>{{ $cat->category_name }}</td>
-                                        <td>
-                                            <a href="{{ $cat->id }}">Edit</a>
-                                            |
-                                            <a href="{{ $cat->id }}">Hapus</a>
-                                        </td>
+                                        <th scope="col"> Category Name</th>
+                                        <th scope="col"> Action </th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody>
+                                    @foreach($categories as $cat)
+                                        <tr>
+                                            <th scope="row">{{ $cat->category_name }}</th>
+                                            <td>
+                                                <a href="/admin/category/edit/{{ $cat->id }}">Edit</a>
+                                                |
+                                                <a href="/admin/category/delete/{{ $cat->id }}">Hapus</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                 </div>

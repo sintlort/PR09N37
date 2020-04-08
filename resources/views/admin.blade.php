@@ -13,42 +13,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-9">
-                <div class="card">
-                    <div class="card-header">{{ __('Register Category') }}</div>
-                    <div class="card-body">
-                        <form method="POST" action="{{route('register.category')}}">
-                        @csrf
-                            <div class="form-group row">
+            <div class="col-sm-2">
+                <form action="{{route('category.details')}}" method="get" target="_blank">
+                    <button type="submit" class="btn btn-primary">{{_("Category")}}</button>
+                </form>
 
-                                <label for="category_name" class="col-sm-2 col-form-label text-md-right">{{ __('Category Name') }}</label>
+                <br/>
+                <form action="{{route('showRegCategory')}}" method="get" target="_blank">
+                    <button type="submit" class="btn btn-primary">{{_("Add Category")}}</button>
+                </form>
+            </div>
+            <div class="col-sm-2">
 
-                                <div class="col-sm-6">
-
-                                    <input id="category_name" type="text" class="form-control @error('category_name') is-invalid @enderror" name="category_name" value="{{ old('category_name') }}" required autocomplete="category_name" autofocus>
-
-                                    @error('category_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                        </span>
-
-                                    @enderror
-
-                                </div>
-
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-sm-4 offset-sm-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Register Category') }}
-                                    </button>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
