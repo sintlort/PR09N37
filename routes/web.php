@@ -17,8 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
+Auth::routes(['verify' => true]);
+//Route::get('profile', function () { Only verified users may enter... })->middleware('verified');
 Route::get('/home', 'HomeController@index')->name('home');
 
 
@@ -26,6 +26,9 @@ Route::prefix('admin')->group(function(){
 	Route::get('/login','Auth\AdminLoginController@showLoginForm')->name('admin.login');
 	Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 	Route::get('/', 'AdminController@index')->name('admin.dashboard');
+	Route::post('/', 'AdminController@registerCategory')->name('register.category');
+	Route::get('/category','AdminController@categoryDetails')->name('category.details');
 });
+
 
 
