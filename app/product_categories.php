@@ -35,4 +35,5 @@ class product_categories extends Model
     protected $casts = [
     ];
     public $timestamps=true;
+
 }

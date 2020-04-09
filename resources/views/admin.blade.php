@@ -13,18 +13,37 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2">
-                <form action="{{route('category.details')}}" method="get" target="_blank">
-                    <button type="submit" class="btn btn-primary">{{_("Category")}}</button>
-                </form>
+            <div class="col-sm-9">
+                <div class="card">
+                    <div class="card-header">Admin Commands</div>
+                    <div class="card-deck">
+                        <div class="card-body">
+                            <div class="mb-1">
+                                <form action="{{route('category.details')}}" method="get" target="_blank">
+                                    <button type="submit" class="btn btn-primary">{{_("Category")}}</button>
+                                </form>
 
-                <br/>
-                <form action="{{route('showRegCategory')}}" method="get" target="_blank">
-                    <button type="submit" class="btn btn-primary">{{_("Add Category")}}</button>
-                </form>
-            </div>
-            <div class="col-sm-2">
+                                <br/>
+                                <form action="{{route('showRegCategory')}}" method="get" target="_blank">
+                                    <button type="submit" class="btn btn-primary">{{_("Add Category")}}</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-1">
+                                <form action="{{route('show.all.products')}}" method="get" target="_blank">
+                                    <button type="submit" class="btn btn-primary">{{_("All Products")}}</button>
+                                </form>
 
+
+                                <br/>
+                                <form action="{{route('show.add.product')}}" method="get" target="_blank">
+                                    <button type="submit" class="btn btn-primary">{{_("Add Products")}}</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -32,11 +32,16 @@ Route::prefix('admin')->group(function(){
 	Route::get('/category/edit/{id}','AdminController@categoryEdit');
 	Route::post('/category/update','AdminController@categoryUpdate')->name('edit.category');
 	Route::get('/category/delete/{id}','AdminController@categoryDelete')->name('delete.category');
-    Route::get('/product/add','AdminController@showaddProducts')->name('show.add.product');
-    Route::post('/product/add','AdminController@addProduct')->name('add.product');
+    Route::get('/products/add','AdminController@showaddProducts')->name('show.add.product');
+    Route::post('/products/add','AdminController@addProduct')->name('add.product');
+    Route::get('/products','AdminController@showAllProducts')->name('show.all.products');
+    Route::get('/products/{id}','AdminController@editProducts')->name('edit.products');
+    Route::post('/products/update','AdminController@updateProducts')->name('update.products');
+    Route::get('/products/delete/{id}','AdminController@deleteProducts')->name('delete.products');
 });
 
 Route::get('/products','userProducts@showAllProducts')->name('show.products');
+Route::get('/products/{id}','userProducts@showProducts')->name('show.specific.products');
 
 
 

@@ -33,4 +33,5 @@ class products extends Model
      */
     protected $casts = [
     ];
+    
 }

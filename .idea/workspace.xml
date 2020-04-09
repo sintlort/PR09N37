@@ -136,6 +136,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programs\XAMPP\htdocs\hehe\resources\views" />
       <recent name="D:\Programs\XAMPP\htdocs\hehe\app\Http\Controllers\Auth" />
     </key>
   </component>
@@ -162,7 +163,8 @@
       <workItem from="1585384462297" duration="6942000" />
       <workItem from="1585638018778" duration="1267000" />
       <workItem from="1586267550350" duration="3714000" />
-      <workItem from="1586322448636" duration="19687000" />
+      <workItem from="1586322448636" duration="22517000" />
+      <workItem from="1586401628130" duration="14572000" />
     </task>
     <servers />
   </component>
@@ -203,14 +205,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1584288449566" />
-    <state x="794" y="443" key="NewPhpFileDialog" timestamp="1586340250850">
+    <state x="794" y="443" key="NewPhpFileDialog" timestamp="1586417058316">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586340250850" />
-    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1586322536761">
+    <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586417058316" />
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1586401634274">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586322536761" />
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586401634274" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1584288669358">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
