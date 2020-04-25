@@ -125,16 +125,22 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/layouts" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programs\XAMPP\htdocs\hehe\resources\views\layouts" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Programs\XAMPP\htdocs\hehe\resources\views" />
       <recent name="D:\Programs\XAMPP\htdocs\hehe\app\Http\Controllers\Auth" />
@@ -164,7 +170,13 @@
       <workItem from="1585638018778" duration="1267000" />
       <workItem from="1586267550350" duration="3714000" />
       <workItem from="1586322448636" duration="22517000" />
-      <workItem from="1586401628130" duration="14572000" />
+      <workItem from="1586401628130" duration="17813000" />
+      <workItem from="1586762378515" duration="7446000" />
+      <workItem from="1586781251516" duration="2429000" />
+      <workItem from="1586794573146" duration="2505000" />
+      <workItem from="1586797297864" duration="756000" />
+      <workItem from="1587789652973" duration="1293000" />
+      <workItem from="1587814417934" duration="17482000" />
     </task>
     <servers />
   </component>
@@ -185,14 +197,18 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="552" y="178" key="#Project_Structure" timestamp="1586796268791">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1586796268791" />
     <state x="678" y="445" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1586324900527">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="678" y="445" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586324900527" />
-    <state x="1206" y="193" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1586342645970">
+    <state x="1206" y="193" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1587838456571">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1206" y="193" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586342645970" />
+    <state x="1206" y="193" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587838456571" />
     <state x="644" y="175" width="645" height="690" key="#phpunit.xml" timestamp="1585394313819">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -209,13 +225,28 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586417058316" />
-    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1586401634274">
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1587839480801">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586401634274" />
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587839480801" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1584288669358">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1584288669358" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1587822391147">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1587822391147" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/userThings.php</url>
+          <line>16</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

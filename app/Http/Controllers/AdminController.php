@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\product_categories;
 use App\product_category_details;
+use App\product_images;
 use App\products;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class AdminController extends Controller
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
-        return redirect('/admin');
+        return redirect('/admin/category');
     }
 
     public function registerCategoryDetails(Request $request){
@@ -82,6 +83,7 @@ class AdminController extends Controller
 
     public function addProduct(Request $request)
     {
+        $product_image_path='product_images';
         $productid = products::create([
             'product_name' => $request->product_name,
             'price' => $request->product_price,
@@ -89,17 +91,30 @@ class AdminController extends Controller
             'stock' => $request->product_stock,
             'weight'=> $request->product_weight,
         ]);
+
         $details_category = product_category_details::create([
             'product_id'=>$productid->id,
             'category_id'=>$request->categories,
         ]);
+
+        if($request->hasfile('file')) {
+            $file = $request->file('file');
+            $file_name = time()."_".$file->getClientOriginalName();
+            $file->move(public_path().'/product_images/', $file_name);
+            product_images::create([
+                'product_id' => $productid->id,
+                'image_name' => $file_name,
+            ]);
+        }
+
         return redirect(route('admin.dashboard'));
     }
 
     public function showAllProducts()
     {
         $allproducts = products::all();
-        return view('showAdminProducts',['allproducts'=>$allproducts]);
+        $listcat = product_categories::all();
+        return view('showAdminProducts',compact('allproducts','listcat'));
     }
 
     public function editProducts($id)
@@ -127,8 +142,6 @@ class AdminController extends Controller
     public function deleteProducts($id)
     {
         $deleteProducts = products::find($id);
-        $deleteDetailProducts = product_category_details::where('product_id',$id);
-        $deleteDetailProducts->delete();
         $deleteProducts->delete();
         return redirect(route('show.all.products'));
     }

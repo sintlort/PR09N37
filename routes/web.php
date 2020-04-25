@@ -29,7 +29,7 @@ Route::prefix('admin')->group(function(){
 	Route::get('/category/add','AdminController@showRegisterCategory')->name('showRegCategory');
 	Route::post('/category/add', 'AdminController@registerCategory')->name('register.category');
     Route::get('/category','AdminController@categoryDetails')->name('category.details');
-	Route::get('/category/edit/{id}','AdminController@categoryEdit');
+	Route::get('/category/edit/{id}','AdminController@categoryEdit')->name('show.edit.category');
 	Route::post('/category/update','AdminController@categoryUpdate')->name('edit.category');
 	Route::get('/category/delete/{id}','AdminController@categoryDelete')->name('delete.category');
     Route::get('/products/add','AdminController@showaddProducts')->name('show.add.product');

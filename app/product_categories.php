@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class product_categories extends Model
 {
     use Notifiable;
-
+    use SoftDeletes;
 
     protected $guard = 'admin';
     /**
@@ -35,5 +36,7 @@ class product_categories extends Model
     protected $casts = [
     ];
     public $timestamps=true;
-
+    protected $dates = [
+      'deleted_at',
+    ];
 }

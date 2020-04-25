@@ -1,14 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" style="margin-top: 5px; margin: auto;">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">{{ __('Register Product') }}</div>
                     <div class="card-body">
-                        <form method="POST" action="{{route('add.product')}}">
+                        <form method="POST" action="{{route('add.product')}}" enctype="multipart/form-data">
                             @csrf
+                            <!Product Image>
+                            <div class="input-group mb-3">
+                                <label for="file" class="col-sm-2 col-form-label text-sm-right">{{_('Product Image')}}</label>
+                                <input type="file" name="file" id="file" style="margin-top:5px;">
+                            </div>
                             <!Product Name>
                             <div class="input-group mb-3">
                                 <label for="product_name" class="col-sm-2 col-form-label text-sm-right">{{_('Product Name')}}</label>

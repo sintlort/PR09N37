@@ -18,12 +18,11 @@
                                 <p class="text-left font-italic" style="font-size: 9px"> {{$catproducts->category_name}}</p>
                                 <form method="get" action="">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Buy</button>
-                                    </div>
-                                </form>
-                                <form method="get" action="">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                                        @csrf
+                                        <input name="product_id" type="hidden" value="{{$products->id}}">
+                                        <input name="qty" type="number" max="10" class="form-control col-1" placeholder="Qty" id="qty"><br/>
+                                        <button type="submit" class="btn btn-primary" name="submitButton" value="buy">Buy</button>
+                                        <button type="submit" class="btn btn-primary" name="submitButton" value="addtocart">Add to Cart</button>
                                     </div>
                                 </form>
                             </div>
