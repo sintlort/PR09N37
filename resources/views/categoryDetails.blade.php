@@ -9,7 +9,7 @@
                         <h2>Manage <b>Categories</b></h2>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#addCategoriesModal" class="btn btn-success" data-toggle="modal">Add New Employee</span></a>
+                        <a href="#addCategoriesModal" class="btn btn-success" data-toggle="modal">Add New Category</span></a>
                     </div>
                 </div>
             </div>

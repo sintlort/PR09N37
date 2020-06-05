@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 //Route::get('profile', function () { Only verified users may enter... })->middleware('verified');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 
 Route::prefix('admin')->group(function(){
@@ -38,10 +38,27 @@ Route::prefix('admin')->group(function(){
     Route::get('/products/{id}','AdminController@editProducts')->name('edit.products');
     Route::post('/products/update','AdminController@updateProducts')->name('update.products');
     Route::get('/products/delete/{id}','AdminController@deleteProducts')->name('delete.products');
+    Route::get('/products/discounts/add','AdminController@showAddDiscountForm')->name('discount.form');
+    Route::post('/products/discounts/add','AdminController@addDiscountToProducts')->name('add.discount.to.product');
+    Route::get('/transaction','AdminController@admin_transaction')->name('admin_transaction');
+    Route::get('/transaction/verif/{id}','AdminController@verifikasi')->name('verifikasi');
+    Route::get('/transaction/deliv/{id}','AdminController@delivered')->name('delivery');
 });
 
 Route::get('/products','userProducts@showAllProducts')->name('show.products');
 Route::get('/products/{id}','userProducts@showProducts')->name('show.specific.products');
+Route::post('/products/buy','userThings@itemsAction')->name('itemsaction');
+route::get('/province','userThings@get_province');
+route::get('/kota/{id}','userThings@get_city');
+Route::get('/cost={city_origin}&destination={city_destination}&weight={weight}&courier={courier}','userThings@couriercost');
+Route::POST('/products/buy/go','userThings@buyItems')->name('buyitem');
+Route::get('/profile',function (){
+    return view('profile');
+});
+Route::get('/trans','userThings@data_transaction')->name('transaction_data');
+Route::POST('/trans/update','userThings@proof_of_payment')->name('proof_of_payment');
+Route::get('/trans/del/{id}','userThings@cancel_transaction')->name('cancel_transaction');
+Route::get('/test','userProducts@tester');
 
 
 

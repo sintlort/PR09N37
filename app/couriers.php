@@ -15,6 +15,7 @@ class couriers extends Model
      * @var array
      */
     protected $fillable = [
+        'courier',
     ];
 
     /**

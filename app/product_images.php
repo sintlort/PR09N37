@@ -36,4 +36,9 @@ class product_images extends Model
     protected $casts = [
     ];
     public $timestamps = true;
+
+    public function prodimg()
+    {
+        return $this->belongsTo('App\products','product_id');
+    }
 }

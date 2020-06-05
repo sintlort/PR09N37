@@ -15,6 +15,7 @@ class transactions extends Model
      * @var array
      */
     protected $fillable = [
+        'timeout','address','regency','province','total','shipping_cost','sub_total','user_id','courier_id','proof_of_payment','status'
     ];
 
     /**
@@ -32,4 +33,9 @@ class transactions extends Model
      */
     protected $casts = [
     ];
+
+    public function kurir()
+    {
+        return $this->belongsTo('App\couriers','courier_id');
+    }
 }

@@ -39,5 +39,19 @@ class products extends Model
     protected $dates = [
         'deleted_at',
     ];
+    public function proddiscount()
+    {
+        return $this->hasMany('App\discounts','id_product');
+    }
+
+    public function prodimage()
+    {
+        return $this->hasMany('App\product_images','product_id');
+    }
+
+    public function cartsp()
+    {
+        return $this->hasMany('App\carts','product_id');
+    }
 
 }

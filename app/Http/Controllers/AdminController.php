@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\discounts;
 use App\product_categories;
 use App\product_category_details;
 use App\product_images;
 use App\products;
+use App\transactions;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -83,21 +85,22 @@ class AdminController extends Controller
 
     public function addProduct(Request $request)
     {
-        $product_image_path='product_images';
-        $productid = products::create([
-            'product_name' => $request->product_name,
-            'price' => $request->product_price,
-            'description'=> $request->product_description,
-            'stock' => $request->product_stock,
-            'weight'=> $request->product_weight,
-        ]);
-
-        $details_category = product_category_details::create([
-            'product_id'=>$productid->id,
-            'category_id'=>$request->categories,
-        ]);
-
         if($request->hasfile('file')) {
+            $product_image_path='product_images';
+            $productid = products::create([
+                'product_name' => $request->product_name,
+                'price' => $request->product_price,
+                'description'=> $request->product_description,
+                'stock' => $request->product_stock,
+                'weight'=> $request->product_weight,
+            ]);
+
+            $details_category = product_category_details::create([
+                'product_id'=>$productid->id,
+                'category_id'=>$request->categories,
+            ]);
+
+
             $file = $request->file('file');
             $file_name = time()."_".$file->getClientOriginalName();
             $file->move(public_path().'/product_images/', $file_name);
@@ -106,7 +109,6 @@ class AdminController extends Controller
                 'image_name' => $file_name,
             ]);
         }
-
         return redirect(route('admin.dashboard'));
     }
 
@@ -144,5 +146,45 @@ class AdminController extends Controller
         $deleteProducts = products::find($id);
         $deleteProducts->delete();
         return redirect(route('show.all.products'));
+    }
+
+    public function showAddDiscountForm()
+    {
+        $productitems=products::all();
+
+        return view('discount',compact('productitems'));
+
+    }
+
+    public function addDiscountToProducts(Request $request)
+    {
+        $temporaryDiscountItems = new discounts([
+            'percentage'=>$request->percent,
+            'start'=>$request->datestart,
+            'end'=>$request->dateend]);
+        $productitem = products::find($request->id);
+        $productitem->proddiscount()->save($temporaryDiscountItems);
+
+        return redirect(route('discount.form'));
+    }
+
+    public function admin_transaction()
+    {
+        $items = transactions::all();
+        return view('trans',compact('items'));
+    }
+    public function verifikasi($id)
+    {
+        $item = transactions::find($id);
+        $item->status="verified";
+        $item->save();
+        return redirect(route('admin_transaction'));
+    }
+    public function delivered($id)
+    {
+        $item = transactions::find($id);
+        $item->status="delivered";
+        $item->save();
+        return redirect(route('admin_transaction'));
     }
 }

@@ -41,9 +41,9 @@
                                     <p class="mb-4">We get it, stuff happens. Just enter your email address below and we'll send you a link to reset your password!</p>
                                 </div>
                                 @if (session('status'))
-                                    <div class="alert alert-success" role="alert">
-                                        {{ session('status') }}
-                                    </div>
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('status') }}
+                                </div>
                                 @endif
                                 <form class="user" method="POST" action="{{route('password.email')}}">
                                     @csrf

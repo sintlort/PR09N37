@@ -16,6 +16,7 @@ class carts extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id','product_id','qty','status',
     ];
 
     /**
@@ -33,4 +34,10 @@ class carts extends Model
      */
     protected $casts = [
     ];
+
+
+    public function procarts()
+    {
+        return $this->belongsTo('App\products','product_id');
+    }
 }

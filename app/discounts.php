@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class discounts extends Model
 {
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -15,6 +17,7 @@ class discounts extends Model
      * @var array
      */
     protected $fillable = [
+        'id_product','percentage','start','end'
     ];
 
     /**
@@ -32,4 +35,14 @@ class discounts extends Model
      */
     protected $casts = [
     ];
+
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    public $timestamps=true;
+    public function proddis()
+    {
+        return $this->belongsTo('App\products','id_product');
+    }
 }

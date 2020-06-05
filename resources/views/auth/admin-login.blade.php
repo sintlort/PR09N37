@@ -1,16 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Admin Login') }}</div>
-
+    <div style="margin-top: 175px;margin-bottom: 445px;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 card border-left-danger shadow h-100 py-5">
+                    <div class="card-header" style="background-color: white">{{ __('Admin Login') }}</div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.login.submit') }}">
                             @csrf
-
                             <div class="form-group row">
                                 <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 

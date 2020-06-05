@@ -15,6 +15,7 @@ class transaction_details extends Model
      * @var array
      */
     protected $fillable = [
+        'transaction_id','product_id','qty',
     ];
 
     /**
