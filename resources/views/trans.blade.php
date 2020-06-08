@@ -63,6 +63,8 @@
                                         <h5>Transaksi dalam status canceled</h5>
                                     @elseif($items1->proof_of_payment==null)
                                         <a href="/trans/del/{{$items1->id}}" class="btn btn-danger text-white">Batal</a><br><a  class="btn btn-primary btn-warning text-white" href="#" data-toggle="modal" data-target="#updateModal{{$items1->id}}">Upload</a>
+                                    @elseif($items1->status=="delivered")
+                                        <a href="/trans/review/{{$items1->id}}" class="btn btn-success text-white">Review Barang!</a>
                                     @else
                                             <h5>Sudah Upload bukti pembayaran</h5>
                                     @endif

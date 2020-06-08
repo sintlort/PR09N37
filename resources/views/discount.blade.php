@@ -9,7 +9,6 @@
                     <div class="card-body">
                         <form method="POST" action="{{route('add.discount.to.product')}}">
                             @csrf
-
                             <!Persentase>
                             <div class="input-group mb-3">
                                 <label for="percent" class="col-sm-2 col-form-label text-sm-right">{{_('Percentage')}}</label>

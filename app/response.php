@@ -8,13 +8,14 @@ use Illuminate\Notifications\Notifiable;
 class response extends Model
 {
     use Notifiable;
-
+    protected $table = "response";
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
+        'review_id','admin_id','content',
     ];
 
     /**
@@ -32,4 +33,9 @@ class response extends Model
      */
     protected $casts = [
     ];
+
+    public function inverseResponse()
+    {
+        $this->belongsTo('App\product_reviews','review_id');
+    }
 }

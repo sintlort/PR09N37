@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Admins;
 use App\carts;
 use App\couriers;
+use App\Notifications\SendNotification;
+use App\Notifications\SendNotificationReview;
 use App\product_images;
+use App\product_reviews;
 use App\products;
 use App\transaction_details;
 use App\transactions;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class userThings extends Controller
 {
@@ -24,13 +29,14 @@ class userThings extends Controller
         $userid = Auth::id();
         $qty = $request->qty;
         $product_id = $request->product_id;
-        $products = products::find($product_id)->first();
+        $products = products::find($product_id);
         $prodimage = product_images::where('product_id',$product_id)->first();
         $kurir = couriers::all();
         $prov = $this->get_province();
+        $notification = Auth::user()->unreadNotifications;
         switch ($request->input('action')) {
             case 'buy':
-                return view('buyitems',compact('userid','qty','product_id','products','kurir','prodimage','prov'));
+                return view('buyitems',compact('userid','qty','product_id','products','kurir','prodimage','prov','notification'));
                 break;
 
             case 'cart':
@@ -41,7 +47,7 @@ class userThings extends Controller
                     'status'=>"notyet",
                 ]);
                 $cart = carts::where('user_id',$userid)->where('status',"notyet")->with('procarts')->get();
-                return redirect()->back()->with('alert','Success!!');
+                return redirect()->back()->with('alert','Add to Cart Success!!');
                 break;
         }
     }
@@ -70,44 +76,78 @@ class userThings extends Controller
             'transaction_id'=>$trans->id,
             'product_id'=>$prod_price->id,
             'qty'=>$request->qty,
+            'selling_price'=>$prod_price->price,
         ]);
-        return redirect('home');
+        $user_data = Auth::user();
+        $reason = "Transaksi";
+        $admin = Admins::find(1);
+        Notification::send($admin, new SendNotification($reason, $user_data));
+        return redirect(route('transaction_data'));
     }
 
-    public function buyCarts()
+    public function show_carts()
+    {
+        $userid = Auth::id();
+        $kurir = couriers::all();
+        $prov = $this->get_province();
+        $cart = carts::where('user_id',$userid)->where('status',"notyet")->with('procarts')->get();
+        $weight=0;
+        for($i=0;$i<=($cart->count()-1);$i++){
+            $weight = $weight+($cart->get($i)->procarts->weight);
+        }
+        $price = 0;
+        for($i=0;$i<=($cart->count()-1);$i++){
+            $price = $price+($cart->get($i)->procarts->price);
+        }
+        $notification = Auth::user()->unreadNotifications;
+        return view('cart',compact('userid','kurir','prov','cart','weight','price','notification'));
+    }
+
+    public function buy_cart_items(Request $request)
     {
         $stats = "unverified";
         $courier_id = couriers::where('courier',$request->kurir)->first();
-    }
-
-
-
-
-    public function addItemsToCartOrBuy(Request $request)
-    {
-    $userid = Auth::user()->id;
-    $qty = $request->qty;
-    $productid = $request->product_id;
-    switch ($request->submitButton){
-        case 'addtocart':
-            carts::create([
-                'user_id' => $userid,
-                'product_id'=> $productid,
-                'qty'=>$qty,
-                'status'=>'notyet',
+        $prod_price = $request->price;
+        $trans = transactions::create([
+            'timeout'=>Carbon::now()->addDays(1),
+            'address'=>$request->address,
+            'regency'=>$request->kota_id,
+            'province'=>$request->provinsi_id,
+            'total'=>$prod_price,
+            'shipping_cost'=>$request->ongkosin,
+            'sub_total'=>$request->totalin,
+            'user_id'=>Auth::id(),
+            'courier_id'=>$courier_id->id,
+            'status'=>$stats,
+        ]);
+        $cart = carts::where('user_id',Auth::id())->where('status',"notyet")->with('procarts')->get();
+        for($i=0;$i<=($cart->count()-1);$i++){
+            $prod_id = $cart->get($i)->procarts->id;
+            $detail_product = products::find($prod_id);
+            transaction_details::create([
+                'transaction_id'=>$trans->id,
+                'product_id'=>$prod_id,
+                'qty'=>$cart->get($i)->qty,
+                'selling_price'=>$detail_product->price,
             ]);
-            return back();
-        break;
-        case 'buy':
-            return view('buyItems',compact('qty','productid'));
-        break;
+            $cartid = $cart->get($i)->id;
+            $updatecart = carts::find($cartid);
+            $updatecart->status="checkedout";
+            $updatecart->save();
+        }
+        $user_data = Auth::user();
+        $reason = "Transaksi";
+        $admin = Admins::find(1);
+        Notification::send($admin, new SendNotification($reason, $user_data));
+        return redirect(route('transaction_data'));
     }
-    }
+
     public function data_transaction()
     {
         $user = Auth::id();
         $items = transactions::where('user_id',$user)->get();
-        return view('trans',compact('items'));
+        $notification = Auth::user()->unreadNotifications;
+        return view('trans',compact('items','notification'));
     }
 
     public function proof_of_payment(Request $request)
@@ -117,9 +157,13 @@ class userThings extends Controller
             $file = $request->file('file');
             $file_name = time()."_".$file->getClientOriginalName();
             $file->move(public_path().$pop_path, $file_name);
-            $transaction = transactions::find($request->id_proof)->first();
+            $transaction = transactions::find($request->id_proof);
             $transaction->proof_of_payment=$file_name;
             $transaction->save();
+            $user_data = Auth::user();
+            $reason = "Upload bukti";
+            $admin = Admins::find(1);
+            Notification::send($admin, new SendNotification($reason, $user_data));
             return redirect(route('transaction_data'));
         };
     }
@@ -129,6 +173,36 @@ class userThings extends Controller
         $trans = transactions::find($id);
         $trans->status="canceled";
         $trans->save();
+        $user_data = Auth::user();
+        $reason = "Cancel Transaksi";
+        $admin = Admins::find(1);
+        Notification::send($admin, new SendNotification($reason, $user_data));
+        return redirect(route('transaction_data'));
+    }
+
+    public function show_review($id)
+    {
+        $items = transaction_details::where('transaction_id',$id)->with('inverseProduct')->get();
+        $notification = Auth::user()->unreadNotifications;
+        return view('review',compact('items','notification'));
+    }
+
+    public function post_review(Request $request)
+    {
+        $item_id = $request->id_product_review;
+        $konten = $request->konten;
+        $user = Auth::id();
+        $ratings = $request->rate;
+        $rev = product_reviews::create([
+            'product_id'=>$item_id,
+            'user_id'=>$user,
+            'rate'=>$ratings,
+            'content'=>$konten,
+        ]);
+        $user_data = Auth::user();
+        $reason = "Review";
+        $admin = Admins::find(1);
+        Notification::send($admin, new SendNotificationReview($reason, $user_data));
         return redirect(route('transaction_data'));
     }
 

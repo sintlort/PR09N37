@@ -38,4 +38,8 @@ class transactions extends Model
     {
         return $this->belongsTo('App\couriers','courier_id');
     }
+    public function details()
+    {
+        return $this->hasMany('App\transaction_details','transaction_id');
+    }
 }

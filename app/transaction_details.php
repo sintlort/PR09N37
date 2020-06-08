@@ -15,7 +15,7 @@ class transaction_details extends Model
      * @var array
      */
     protected $fillable = [
-        'transaction_id','product_id','qty',
+        'transaction_id','product_id','qty','selling_price',
     ];
 
     /**
@@ -33,4 +33,14 @@ class transaction_details extends Model
      */
     protected $casts = [
     ];
+
+    public function inverseDetails()
+    {
+        return $this->belongsTo('App\transactions','transaction_id');
+    }
+
+    public function inverseProduct()
+    {
+        return $this->belongsTo('App\products','product_id');
+    }
 }

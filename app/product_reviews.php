@@ -15,6 +15,7 @@ class product_reviews extends Model
      * @var array
      */
     protected $fillable = [
+        'product_id','user_id','rate','content',
     ];
 
     /**
@@ -32,4 +33,14 @@ class product_reviews extends Model
      */
     protected $casts = [
     ];
+
+    public function product_rev()
+    {
+        return $this->belongsTo('App\products','product_id');
+    }
+
+    public function user_rev()
+    {
+        return $this->belongsTo('App\User','user_id');
+    }
 }

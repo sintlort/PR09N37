@@ -41,7 +41,8 @@ class discounts extends Model
     ];
 
     public $timestamps=true;
-    public function proddis()
+
+    public function relasiDiskonProduct()
     {
         return $this->belongsTo('App\products','id_product');
     }

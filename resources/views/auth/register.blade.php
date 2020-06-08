@@ -7,9 +7,12 @@
                 <div class="col-md-8 card border-left-warning shadow h-100 py-5">
                     <div class="card-header" style="background-color: white">{{ __('Register') }}</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
-
+                            <div class="form-group row">
+                                <label for="file" class="col-md-4 col-form-label text-md-right">{{_('Profile Picture')}}</label>
+                                <input type="file" name="file" id="file" style="margin-top:5px;">
+                            </div>
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 

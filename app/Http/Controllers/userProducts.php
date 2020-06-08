@@ -9,9 +9,11 @@ use App\products;
 use App\transactions;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class userProducts extends Controller
 {
+
     public function showAllProducts(){
         $allProducts = products::all();
         return view('products',['products'=>$allProducts]);
@@ -23,7 +25,8 @@ class userProducts extends Controller
         $categorydetailproducts = product_category_details::where('product_id',$id)->first();
         $idcategory = $categorydetailproducts->category_id;
         $catproducts = product_categories::find($idcategory);
-        return view('detailsProducts')->with(compact('products','catproducts','proddisc','prodimg'));
+        $notification = Auth::user()->unreadNotifications;
+        return view('detailsProducts')->with(compact('products','catproducts','proddisc','prodimg','notification'));
     }
 
     public function tester()

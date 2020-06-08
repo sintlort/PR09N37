@@ -8,7 +8,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Checkout</h6>
                 </div>
                 <div class="card-body py-3 align-items-center">
-                    <form action="{{route('buyitem')}}" method="post">
+                    <form action="{{route('buy_cart_items')}}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -69,9 +69,24 @@
                 <div class="card-body py-3 align-items-center">
                     <div class="col-xl-12 py-3 d-flex flex-row align-items-center justify-content-between bg-white border-bottom">
                         <div class="row">
+                            <h5>Total Belanja Rp. </h5>
+                            <div class="h5" id="belanja">{{$price}}</div>
+                            <input type="hidden" id="price" name="price" value="{{$price}}">
+                        </div>
+                    </div>
+                    <div class="col-xl-12 py-3 d-flex flex-row align-items-center justify-content-between bg-white border-bottom">
+                        <div class="row">
                             <h5>Ongkos Kirim Rp.</h5>
                             <div class="h5" id="ongkos"></div>
                             <input type="hidden" id="ongkosin" name="ongkosin" value="">
+                            <input type="hidden" id="weight" name="weight" value="{{$weight}}">
+                        </div>
+                    </div>
+                    <div class="col-xl-12 py-3 d-flex flex-row align-items-center justify-content-between bg-white border-bottom border-white">
+                        <div class="row">
+                            <h5>Total Rp.</h5>
+                            <div class="h5" id="total"></div>
+                            <input type="hidden" id="totalin" name="totalin" value="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -109,7 +124,7 @@
                         let origin = 114;
                         let destination = $("select[name=kota_id]").val();
                         let courier = $("select[name=kurir]").val();
-                        let weight =  $('#weight').attr('name');
+                        let weight = $("input[name=weight").val();
                         if(courier){
                             jQuery.ajax({
                                 url:"/cost="+origin+"&destination="+destination+"&weight="+weight+"&courier="+courier,
@@ -133,7 +148,7 @@
 
                     $('select[name="layanan"]').on('change', function(){
                         let courier = parseInt($("select[name=layanan]").val());
-                        var money = parseInt($("#belanja").text());
+                        var money = parseInt($("input[name=price").val());
                         var total = money+courier;
                         $('#totalin').val(total);
                         $('#ongkosin').val(courier);
