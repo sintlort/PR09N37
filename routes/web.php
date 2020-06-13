@@ -52,6 +52,11 @@ Route::prefix('admin')->group(function(){
 
     Route::get('/respon','AdminController@show_all_reviews')->name('show_all_reviews');
     Route::post('/respon/review','AdminController@respond_to_reviews')->name('respond_to_reviews');
+
+    Route::get('/courier','AdminController@readcourier')->name('read_courier');
+    Route::post('/courier/up','AdminController@updatecourier')->name('update_courier');
+    Route::post('/courier/add','AdminController@createcourier')->name('create_courier');
+    Route::get('/courier/{id}','AdminController@deletecourier')->name('delete_courier');
 });
 
 Route::get('/products','userProducts@showAllProducts')->name('show.products');

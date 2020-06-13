@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class couriers extends Model
 {
     use Notifiable;
-
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -32,5 +33,9 @@ class couriers extends Model
      * @var array
      */
     protected $casts = [
+    ];
+
+    protected $dates = [
+        'deleted_at',
     ];
 }

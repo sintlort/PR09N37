@@ -45,7 +45,6 @@
                     @foreach($allproducts as $ap)
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100 ">
-                                <a href="#"><img class="card-img-top" src="https://htmlstream.com/preview/space-v1.1/assets/img/700x400/img1.jpg" alt=""></a>
                                 <div class="card-body">
                                     <h4 class="card-title">
                                         <a href="/products/{{$ap->id}}">{{$ap->product_name}}</a>

@@ -22,15 +22,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $allproducts = products::all();
-        $listcat = product_categories::all();
         $image = products::with('prodimage')->get();
+        $allproducts = products::with('prodimage')->with('proddiscount')->with('detailCategory')->get();
         if(Auth::user())
         {
             $notification = Auth::user()->unreadNotifications;
-            return view('home',compact('allproducts','listcat','image','notification'));
+            return view('home',compact('allproducts','image','notification'));
         }
 
-        return view('home',compact('allproducts','listcat','image'));
+        return view('home',compact('allproducts','image'));
     }
 }

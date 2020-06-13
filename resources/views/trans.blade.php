@@ -51,10 +51,14 @@
                                         <h5>Status Canceled</h5>
                                     @elseif ($items1->status=="expired")
                                         <h5>Status Expired</h5>
-                                        @elseif($items1->proof_of_payment!=null)
+                                        @elseif($items1->status=="unverified" && $items1->proof_of_payment!=null)
                                         <a href="transaction/verif/{{$items1->id}}" class="btn btn-success text-white">Verifikasi</a>
+                                        @elseif($items1->status=="verified" && $items1->proof_of_payment!=null)
                                         <a href="transaction/deliv/{{$items1->id}}" class="btn btn-warning text-white">Delivered</a>
+                                        @elseif($items1->status=="delivered")
+                                        <h5>Barang Dikirim</h5>
                                         @else
+                                        <h5>Belum upload Bukti Pembayaran</h5>
                                     @endif
                                 @else
                                     @if($items1->status=="expired")

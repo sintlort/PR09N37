@@ -63,7 +63,7 @@
                                 <input type="hidden" value="{{$review2->id}}" name="id_review" id="id_review">
                                 <div class="input-group mb-5">
                                     <label for="respon" class="col-sm-3 col-form-label text-sm-right text-primary">Admin, tolong responnya!!</label>
-                                    <textarea id="respon" name="respon" placeholder="Respond!!" class="form-control" aria-label="With textarea"></textarea>
+                                    <textarea id="respon" name="respon" placeholder="Respond!!" class="form-control" required aria-label="With textarea"></textarea>
                                 </div>
                         </div>
                         <div class="modal-footer">

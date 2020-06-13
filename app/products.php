@@ -49,9 +49,19 @@ class products extends Model
         return $this->hasMany('App\product_images','product_id');
     }
 
+    public function detailCategory()
+    {
+        return $this->hasMany('App\product_category_details','product_id');
+    }
+
     public function cartsp()
     {
         return $this->hasMany('App\carts','product_id');
+    }
+
+    public function checkReview()
+    {
+        return $this->hasMany('App\product_reviews','product_id');
     }
 
 }

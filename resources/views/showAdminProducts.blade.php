@@ -1,12 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container"> 
+    <div class="container">
         <div class="row">
             <div class="card-columns">
                 @foreach($allproducts as $prod)
                     <div class="card">
-                        <img class="card-img-top" src="https://i.pinimg.com/originals/fb/1c/c9/fb1cc9560c5aa9c043f003cbdda4430e.png" alt="Card image cap" style="max-width: 150px">
                         <div class="card-body">
                             <h5 class="card-title">{{$prod->product_name}}</h5>
                             <p class="card-text">Rp. {{$prod->price}}</p>
@@ -58,7 +57,7 @@
                             <!Product Name>
                             <div class="input-group mb-3">
                                 <label for="product_name" class="col-sm-2 col-form-label text-sm-right">{{_('Product Name')}}</label>
-                                <input id="product_name" name="product_name" type="text" class="form-control" placeholder="Product Name" aria-label="product_name" aria-describedby="basic-addon1" value="{{$prod->product_name}}">
+                                <input id="product_name" name="product_name" type="text" class="form-control" placeholder="Product Name" required aria-label="product_name" aria-describedby="basic-addon1" value="{{$prod->product_name}}">
                             </div>
 
                             <!Product Prices>
@@ -67,25 +66,25 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rp.</span>
                                 </div>
-                                <input id="product_price" name="product_price" type="number" min="1000" class="form-control" placeholder="Product price" aria-label="product_price" aria-describedby="basic-addon1" value="{{$prod->price}}">
+                                <input id="product_price" name="product_price" type="number" min="1000" class="form-control" placeholder="Product price" required aria-label="product_price" aria-describedby="basic-addon1" value="{{$prod->price}}">
                             </div>
 
                             <!Product Description>
                             <div class="input-group mb-3">
                                 <label for="product_description" class="col-sm-2 col-form-label text-sm-right">{{_('Desc.')}}</label>
-                                <textarea id="product_description" name="product_description" placeholder="Product Description" class="form-control" aria-label="With textarea">{{$prod->description}}</textarea>
+                                <textarea id="product_description" name="product_description" placeholder="Product Description" class="form-control" required aria-label="With textarea">{{$prod->description}}</textarea>
                             </div>
 
                             <!Product Stock>
                             <div class="input-group mb-3">
                                 <label for="product_stock" class="col-sm-2 col-form-label text-sm-right">{{_('Stock')}}</label>
-                                <input id="product_stock" name="product_stock" type="number" class="form-control" placeholder="Product stock" aria-label="product_stock" aria-describedby="basic-addon1" value="{{$prod->stock}}">
+                                <input id="product_stock" name="product_stock" type="number" class="form-control" placeholder="Product stock" required aria-label="product_stock" aria-describedby="basic-addon1" value="{{$prod->stock}}">
                             </div>
 
                             <!Product Weight>
                             <div class="input-group mb-3">
                                 <label for="product_weight" class="col-sm-2 col-form-label text-sm-right">{{_('Weight')}}</label>
-                                <input id="product_weight" name="product_weight" type="number" class="form-control" placeholder="Product weight" aria-label="product_weight" aria-describedby="basic-addon1" value="{{$prod->weight}}">
+                                <input id="product_weight" name="product_weight" type="number" class="form-control" placeholder="Product weight" required aria-label="product_weight" aria-describedby="basic-addon1" value="{{$prod->weight}}">
                                 <div class="input-group-append">
                                     <span class="input-group-text">Kg</span>
                                 </div>

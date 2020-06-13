@@ -33,4 +33,9 @@ class product_category_details extends Model
      */
     protected $casts = [
     ];
+
+    public function checkCategory()
+    {
+        return $this->belongsTo('App\product_categories','category_id');
+    }
 }

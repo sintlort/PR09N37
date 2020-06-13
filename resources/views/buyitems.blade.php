@@ -15,12 +15,12 @@
                                 <div class="form-group ">
                                     <label>Alamat<span>*</span>
                                     </label>
-                                    <textarea id="address" name="address" class="form-control" placeholder="Alamat Lengkap pengiriman"></textarea>
+                                    <textarea id="address" name="address" class="form-control" required placeholder="Alamat Lengkap pengiriman"></textarea>
                                </div>
                                 <div class="form-group ">
                                     <label>Provinsi Tujuan<span>*</span>
                                     </label>
-                                    <select name="provinsi_id" id="provinsi_id" class="form-control border-danger">
+                                    <select name="provinsi_id" id="provinsi_id" required class="form-control border-danger">
                                         <option value="">Pilih Provinsi</option>
                                         @foreach($prov as $p)
                                             <option value="{{$p['province_id']}}">{{$p['province']}}</option>
@@ -30,7 +30,7 @@
                                 <div class="form-group ">
                                     <label>Kota Tujuan<span>*</span>
                                     </label>
-                                    <select name="kota_id" id="kota_id" class="form-control border-danger">
+                                    <select name="kota_id" id="kota_id" required class="form-control border-danger">
                                         <option value="">Pilih Kota</option>
                                     </select>
                                 </div>
@@ -53,7 +53,7 @@
                 <div class="form-group ">
                     <label>Ekspedisi<span>*</span>
                     </label>
-                    <select name="kurir" id="kurir" class="form-control border-primary">
+                    <select name="kurir" id="kurir" required class="form-control border-primary">
                         <option value="">Pilih Ekspedisi</option>
                         @foreach($kurir as $k)
                             <option value="{{$k->courier}}">{{strtoupper($k->courier)}}</option>
@@ -63,7 +63,7 @@
             <div class="form-group ">
                 <label>Layanan<span>*</span>
                 </label>
-                <select name="layanan" id="layanan" class="form-control border-primary">
+                <select name="layanan" id="layanan" required class="form-control border-primary">
                     <option value="">Pilih Layanan</option>
                 </select>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Admins;
 use App\carts;
+use App\couriers;
 use App\discounts;
 use App\Notifications\SendNotification;
 use App\Notifications\SendNotificationForAdmin;
@@ -15,6 +16,7 @@ use App\products;
 use App\response;
 use App\transactions;
 use App\User;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -40,8 +42,72 @@ class AdminController extends Controller
 
     public function index()
     {
+        $perbulan = transactions::where('status','!=','expired')->where('status','!=','canceled')->avg('sub_total');
+        $perbulangrafik = transactions::selectRaw('sum(sub_total) as total, month(created_at) as month')->groupBy('month')->get();
+        $laporan = transactions::selectRaw('count(*) as jumlah, sum(sub_total) as sub_total, month(created_at) as month')->groupBy('month')->get();
+        $tahunan = transactions::selectRaw('count(*) as jumlah, sum(sub_total) as sub_total, year(created_at) as year')->groupBy('year')->get();
+        $json_total = [];
+        $json_bulan = [];
+        $datapenghasilan1 = 0;
+        $datatahunan1=0;
+        foreach($perbulangrafik as $grafik){
+            $json_total[] = $grafik->total;
+            $dateobj = DateTime::createFromFormat('!m',$grafik->month);
+            $monthname = $dateobj->format('F');
+            $json_bulan[] = $monthname;
+        }
+        foreach($laporan as $penghasilan){
+            $datapenghasilan2 = $datapenghasilan1+$penghasilan->sub_total;
+            $datapenghasilan1 = $datapenghasilan2;
+        }
+            $datapenghasilan3 =$datapenghasilan1/count($laporan);
+        foreach ($tahunan as $pendapatantahunan){
+            $datatahunan2 = $datatahunan1+$pendapatantahunan->sub_total;
+            $datatahunan1 = $datatahunan2;
+        }
+            $datatahunan3 = $datatahunan1/count($tahunan);
         $notification = Auth::user()->unreadNotifications;
-        return view('admin',compact('notification'));
+        return view('admin',compact('notification','perbulan','json_bulan','json_total','laporan','datapenghasilan3','datatahunan3'));
+    }
+    public function readcourier()
+    {
+        $courier = couriers::all();
+        $notification = Auth::user()->unreadNotifications;
+        return view('courier',compact('courier','notification'));
+    }
+
+    public function createcourier(Request $request)
+    {
+        $val = $request->validate([
+            'courier_name'=>'required'
+        ]);
+        $courier = strtolower($request->courier_name);
+        couriers::create([
+            'courier'=>$courier,
+        ]);
+        return redirect(route('read_courier'));
+    }
+
+    public function updatecourier(Request $request)
+    {
+        $val = $request->validate([
+            'courier_name'=>'required'
+        ]);
+        $courier = strtolower($request->courier_name);
+        $updateCourier = couriers::find($request->id);
+        $updateCourier->courier = $courier;
+        $updateCourier->save();
+
+        return redirect(route('read_courier'));
+
+    }
+
+    public function deletecourier($id)
+    {
+        $delcourier = couriers::find($id);
+        $delcourier->delete();
+
+        return redirect(route('read_courier'));
     }
 
     public function showRegisterCategory()
@@ -51,10 +117,11 @@ class AdminController extends Controller
 
     public function registerCategory(Request $request)
     {
-        DB::table('product_categories')->insert([
-            'category_name' => $request->category_name,
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
+        $val = $request->validate([
+            'category_name'=>'required'
+        ]);
+        product_categories::create([
+            'category_name'=>$request->category_name,
         ]);
         return redirect('/admin/category');
     }
@@ -73,6 +140,9 @@ class AdminController extends Controller
 
     public function categoryUpdate(Request $request)
     {
+        $val = $request->validate([
+            'category_name'=>'required'
+        ]);
         $updateCategory = product_categories::find($request->id);
         $updateCategory->category_name=($request->category_name);
         $updateCategory->save();
@@ -95,6 +165,13 @@ class AdminController extends Controller
 
     public function addProduct(Request $request)
     {
+        $val = $request->validate([
+            'product_name'=>'required',
+            'product_price'=>'required',
+            'product_description'=>'required',
+            'product_stock'=>'required',
+            'product_weight'=>'required',
+        ]);
         if($request->hasfile('file')) {
             $product_image_path='product_images';
             $productid = products::create([
@@ -104,20 +181,23 @@ class AdminController extends Controller
                 'stock' => $request->product_stock,
                 'weight'=> $request->product_weight,
             ]);
-
-            $details_category = product_category_details::create([
-                'product_id'=>$productid->id,
-                'category_id'=>$request->categories,
-            ]);
-
+            $arrayCategory = $request->input('categories');
+            foreach($arrayCategory as $ac){
+                product_category_details::create([
+                    'product_id'=>$productid->id,
+                    'category_id'=>$ac,
+                ]);
+            }
 
             $file = $request->file('file');
-            $file_name = time()."_".$file->getClientOriginalName();
-            $file->move(public_path().'/product_images/', $file_name);
-            product_images::create([
-                'product_id' => $productid->id,
-                'image_name' => $file_name,
-            ]);
+            foreach($file as $files){
+                $file_name = time()."_".$files->getClientOriginalName();
+                $files->move(public_path().'/product_images/', $file_name);
+                product_images::create([
+                    'product_id' => $productid->id,
+                    'image_name' => $file_name,
+                ]);
+            }
         }
         return redirect(route('admin.dashboard'));
     }
@@ -140,6 +220,13 @@ class AdminController extends Controller
 
     public function updateProducts(Request $request)
     {
+        $val = $request->validate([
+            'product_name'=>'required',
+            'product_price'=>'required',
+            'product_description'=>'required',
+            'product_stock'=>'required',
+            'product_weight'=>'required',
+        ]);
         $updateProducts = products::find($request->product_id);
         $updateProducts->product_name = $request->product_name;
         $updateProducts->price = $request->product_price;
@@ -185,6 +272,11 @@ class AdminController extends Controller
 
     public function updateDiscount(Request $request)
     {
+        $val = $request->validate([
+            'percent'=>'required',
+            'datestart'=>'required',
+            'dateend'=>'required',
+        ]);
         $update = discounts::find($request->id);
         $update->percentage = $request->percent;
         $update->start = $request->datestart;
@@ -196,6 +288,11 @@ class AdminController extends Controller
 
     public function addDiscountToProducts(Request $request)
     {
+        $val = $request->validate([
+            'percentage'=>'required',
+            'start'=>'required',
+            'end'=>'required',
+        ]);
         $temporaryDiscountItems = new discounts([
             'percentage'=>$request->percent,
             'start'=>$request->datestart,
@@ -244,9 +341,9 @@ class AdminController extends Controller
         }
 
         $notification = Auth::user()->unreadNotifications;
-        $discount = discounts::with('discount')->get();
-        dd($discount);
-        return view('tester',compact('weight','notification','discount'));
+        $proddisc = products::find(32)->with('proddiscount');
+        dd($proddisc);
+        return view('tester',compact('weight','notification'));
     }
 
     public function show_all_reviews()
@@ -258,6 +355,9 @@ class AdminController extends Controller
 
     public function respond_to_reviews(Request $request)
     {
+        $val = $request->validate([
+            'respon'=>'required',
+        ]);
         $admin_id = Auth::id();
         $review_id = $request->id_review;
         $konten = $request->respon;

@@ -30,14 +30,14 @@
                             </tr>
                             </tfoot>
                             <tbody>
-                            <tr>
                                 @foreach($items as $listitems)
-                                    <td>{{$listitems->inverseProduct->product_name}}</td>
-                                    <td>{{$listitems->inverseProduct->price}}</td>
-                                    <td>{{$listitems->qty}}</td>
-                                    <td><a href="#" class="btn btn-success text-white" data-toggle="modal" data-target="#reviewModal{{$listitems->inverseProduct->id}}">Review!!</a></td>
+                                    <tr>
+                                        <td>{{$listitems->inverseProduct->product_name}}</td>
+                                        <td>{{$listitems->inverseProduct->price}}</td>
+                                        <td>{{$listitems->qty}}</td>
+                                        <td><a href="#" class="btn btn-success text-white" data-toggle="modal" data-target="#reviewModal{{$listitems->inverseProduct->id}}">Review!!</a></td>
+                                    </tr>
                                 @endforeach
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -60,7 +60,7 @@
                                 <input type="hidden" value="{{$listitems2->inverseProduct->id}}" name="id_product_review" id="id_product_review">
                                 <div class="input-group mb-5">
                                     <label for="konten" class="col-sm-3 col-form-label text-sm-right text-primary">Review Kamu</label>
-                                    <textarea id="konten" name="konten" placeholder="Review!!" class="form-control" aria-label="With textarea"></textarea>
+                                    <textarea id="konten" name="konten" placeholder="Review!!" class="form-control" required aria-label="With textarea"></textarea>
                                 </div>
                                 <div class="input-group mb-5">
                                     <label for="rate" class="col-sm-3 col-form-label text-sm-right">Ratings</label>

@@ -26,6 +26,9 @@ class userThings extends Controller
 
     public function itemsAction(Request $request)
     {
+        $val = $request->validate([
+            'qty'=>'required',
+        ]);
         $userid = Auth::id();
         $qty = $request->qty;
         $product_id = $request->product_id;
@@ -91,20 +94,37 @@ class userThings extends Controller
         $kurir = couriers::all();
         $prov = $this->get_province();
         $cart = carts::where('user_id',$userid)->where('status',"notyet")->with('procarts')->get();
-        $weight=0;
-        for($i=0;$i<=($cart->count()-1);$i++){
-            $weight = $weight+($cart->get($i)->procarts->weight);
+        $count = count($cart);
+        if($count!=0){
+            $weight=0;
+            for($i=0;$i<=($cart->count()-1);$i++){
+                $weight = $weight+($cart->get($i)->procarts->weight);
+            }
+            $price = 0;
+            for($i=0;$i<=($cart->count()-1);$i++){
+                $price = $price+($cart->get($i)->procarts->price);
+            }
+            $notification = Auth::user()->unreadNotifications;
+            return view('cart',compact('userid','kurir','prov','cart','weight','price','notification'));
         }
-        $price = 0;
-        for($i=0;$i<=($cart->count()-1);$i++){
-            $price = $price+($cart->get($i)->procarts->price);
+        else
+        {
+            return redirect()->back();
         }
-        $notification = Auth::user()->unreadNotifications;
-        return view('cart',compact('userid','kurir','prov','cart','weight','price','notification'));
+
     }
 
     public function buy_cart_items(Request $request)
     {
+        $val = $request->validate([
+            'address'=>'required',
+            'kota_id'=>'required',
+            'provinsi_id'=>'required',
+            'price'=>'required',
+            'ongkosin'=>'required',
+            'totalin'=>'required',
+        ]);
+
         $stats = "unverified";
         $courier_id = couriers::where('courier',$request->kurir)->first();
         $prod_price = $request->price;
@@ -189,6 +209,10 @@ class userThings extends Controller
 
     public function post_review(Request $request)
     {
+        $val = $request->validate([
+            'rate'=>'required',
+            'konten'=>'required'
+        ]);
         $item_id = $request->id_product_review;
         $konten = $request->konten;
         $user = Auth::id();
